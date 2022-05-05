@@ -53,14 +53,20 @@ contract PackedListPropertyValidator is IPropertyValidator {
                     continue
                 }
                 // if (value > tokenId) {
-                //     right = mid - 1;
+                //     right = mid;
                 //     continue; 
                 // }
                 if gt(value, tokenId) {
-                    right := sub(mid, 1)
+                    right := mid
                     continue
                 }
-                // if(packedList[mid] == tokenId) { return; }
+                // if (value == tokenId) { return; }
+                stop()
+            }
+            // At this point left == right; check if list[left] == tokenId
+            let offset := add(packedList, mul(left, bytesPerTokenId))
+            let value := and(mload(offset), bitMask)
+            if eq(value, tokenId) {
                 stop()
             }
         }
