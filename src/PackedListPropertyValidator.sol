@@ -28,6 +28,9 @@ contract PackedListPropertyValidator is IPropertyValidator {
             "PackedListPropertyValidator::validateProperty/INVALID_BYTES_PER_TOKEN_ID"
         );
 
+        // Masks the lower `bytesPerTokenId` bytes of a word
+        // So if `bytesPerTokenId` == 1, then bitmask = 0xff
+        //    if `bytesPerTokenId` == 2, then bitmask = 0xffff, etc.
         uint256 bitMask = ~(type(uint256).max << (bytesPerTokenId << 3));
         assembly {
             // Binary search for given tokenId

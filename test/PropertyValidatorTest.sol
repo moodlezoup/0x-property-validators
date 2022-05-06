@@ -69,4 +69,31 @@ contract PropertyValidatorTest is Test {
             abi.encode(uint256(1), list)
         );
     }
+    function testPackedListPropertyValidatorUint16Success() public view {
+        bytes memory list = abi.encodePacked(
+            uint16(8), 
+            uint16(67), 
+            uint16(5309), 
+            uint16(8675)
+        );
+        listValidator.validateProperty(
+            address(0),
+            5309,
+            abi.encode(uint256(2), list)
+        );
+    }
+    function testPackedListPropertyValidatorUint16Failure() public {
+        bytes memory list = abi.encodePacked(
+            uint16(8), 
+            uint16(67), 
+            uint16(5309), 
+            uint16(8675)
+        );
+        vm.expectRevert("PackedListPropertyValidator::validateProperty::TOKEN_ID_NOT_FOUND_IN_LIST");
+        listValidator.validateProperty(
+            address(0),
+            1234,
+            abi.encode(uint256(2), list)
+        );
+    }
 }
