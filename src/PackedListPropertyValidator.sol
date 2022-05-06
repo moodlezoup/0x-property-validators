@@ -28,7 +28,7 @@ contract PackedListPropertyValidator is IPropertyValidator {
             "PackedListPropertyValidator::validateProperty/INVALID_BYTES_PER_TOKEN_ID"
         );
 
-        uint256 bitMask = ~(type(uint256).max << (bytesPerTokenId * 8));
+        uint256 bitMask = ~(type(uint256).max << (bytesPerTokenId << 3));
         assembly {
             // Binary search for given tokenId
 
@@ -39,7 +39,7 @@ contract PackedListPropertyValidator is IPropertyValidator {
             // while(left < right)
             for {} lt(left, right) {} {
                 // mid = (left + right) / 2
-                let mid := div(add(left, right), 2)
+                let mid := shr(add(left, right), 1)
                 // more or less equivalent to:
                 // value = list[index]
                 let offset := add(packedList, mul(mid, bytesPerTokenId))

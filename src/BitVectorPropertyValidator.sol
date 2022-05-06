@@ -18,12 +18,12 @@ contract BitVectorPropertyValidator is IPropertyValidator {
         pure
     {
         require(
-            tokenId < propertyData.length * 8, 
+            tokenId < propertyData.length << 3, 
             "BitVectorPropertyValidator::validateProperty/EXCEEDS_BITVECTOR_LENGTH"
         );
 
         require(
-            uint8(propertyData[tokenId / 8]) & (0x80 >> (tokenId % 8)) != 0,
+            uint8(propertyData[tokenId >> 3]) & (0x80 >> (tokenId & 7)) != 0,
             "BitVectorPropertyValidator::validateProperty/INVALID"
         );
     }
