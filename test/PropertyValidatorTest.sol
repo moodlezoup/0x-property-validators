@@ -16,35 +16,28 @@ contract PropertyValidatorTest is Test {
 
     function testBitVectorPropertyValidatorSuccess() public view {
         // 80 bits
-        bytes memory bitVector = new bytes(10);
+        bytes memory bitVector = new bytes(1250);
         // The 63rd bit is set
         bitVector[7] = 0x01;
-        bitVecValidator.validateProperty(
-            address(0),
-            63,
-            bitVector
-        );
+        bitVecValidator.validateProperty(address(0), 63, bitVector);
     }
+
     function testBitVectorPropertyValidatorFailure() public {
         // 80 bits
         bytes memory bitVector = new bytes(10);
         // The 63rd bit is set
         bitVector[7] = 0x01;
         vm.expectRevert("BitVectorPropertyValidator::validateProperty/INVALID");
-        bitVecValidator.validateProperty(
-            address(0),
-            64,
-            bitVector
-        );
+        bitVecValidator.validateProperty(address(0), 64, bitVector);
     }
 
     function testPackedListPropertyValidatorUint8Success() public view {
         bytes memory list = abi.encodePacked(
-            uint8(2), 
-            uint8(3), 
-            uint8(5), 
-            uint8(7), 
-            uint8(11), 
+            uint8(2),
+            uint8(3),
+            uint8(5),
+            uint8(7),
+            uint8(11),
             uint8(13)
         );
         listValidator.validateProperty(
@@ -53,16 +46,51 @@ contract PropertyValidatorTest is Test {
             abi.encode(uint256(1), list)
         );
     }
+
+    function testPackedListPropertyValidatorUint8SuccessBigly() public view {
+        bytes memory list = abi.encodePacked(
+            uint8(2),
+            uint8(3),
+            uint8(5),
+            uint8(7),
+            uint8(11),
+            uint8(12),
+            uint8(13),
+            uint8(15),
+            uint8(17),
+            uint8(11),
+            uint8(21),
+            uint8(23),
+            uint8(25),
+            uint8(27)
+        );
+        listValidator.validateProperty(
+            address(0),
+            25,
+            abi.encode(uint256(1), list)
+        );
+    }
+
     function testPackedListPropertyValidatorUint8Failure() public {
         bytes memory list = abi.encodePacked(
-            uint8(2), 
-            uint8(3), 
-            uint8(5), 
-            uint8(7), 
-            uint8(11), 
-            uint8(13)
+            uint8(2),
+            uint8(3),
+            uint8(5),
+            uint8(7),
+            uint8(11),
+            uint8(12),
+            uint8(13),
+            uint8(15),
+            uint8(17),
+            uint8(11),
+            uint8(21),
+            uint8(23),
+            uint8(25),
+            uint8(27)
         );
-        vm.expectRevert("PackedListPropertyValidator::validateProperty::TOKEN_ID_NOT_FOUND_IN_LIST");
+        vm.expectRevert(
+            "PackedListPropertyValidator::validateProperty::TOKEN_ID_NOT_FOUND_IN_LIST"
+        );
         listValidator.validateProperty(
             address(0),
             8,
