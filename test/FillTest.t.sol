@@ -52,21 +52,23 @@ contract MerkleValidatorTest is Test {
         order.maker = maker;
         // order.taker = address(0x00);
         order.expiry = block.timestamp + 1 days;
-        // order.nonce = 0;
+        order.nonce = 123456789;
         order.erc20Token = address(weth);
         order.erc20TokenAmount = price;
         // order.fees = new Fee[](0);
         order.erc721Token = address(token);
-        order.erc721TokenId = 63;
+        order.erc721TokenId = 0;
         order.erc721TokenProperties = new Property[](1);
-        order.erc721TokenProperties[0].propertyValidator = bitVectorValidator;
+        order.erc721TokenProperties[0].propertyValidator = address(
+            bitVectorValidator
+        );
 
-        // 80 bits
-        bytes memory bitVector = new bytes(1250);
+        // // // // 80 bits
+        bytes memory bitVector = new bytes(10);
         // The 63rd bit is set
         bitVector[7] = 0x01;
 
-        order.erc721TokenProperties[0].propertyData = abi.encode(bitVector);
+        order.erc721TokenProperties[0].propertyData = bitVector;
 
         // Sign the order.
         bytes32 orderHash = zeroExV4.getERC721OrderHash(order);

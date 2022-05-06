@@ -28,7 +28,7 @@ enum TradeDirection {
 }
 
 struct Property {
-    IPropertyValidator propertyValidator;
+    address propertyValidator;
     bytes propertyData;
 }
 
