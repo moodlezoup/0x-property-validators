@@ -1,0 +1,6 @@
+MerkleValidatorTest:testFillingTraitBid() (gas: 359217)
+PropertyValidatorTest:testBitVectorPropertyValidatorFailure() (gas: 9407)
+PropertyValidatorTest:testBitVectorPropertyValidatorSuccess() (gas: 9337)
+PropertyValidatorTest:testPackedListPropertyValidatorUint8Failure() (gas: 12092)
+PropertyValidatorTest:testPackedListPropertyValidatorUint8Success() (gas: 7769)
+PropertyValidatorTest:testPackedListPropertyValidatorUint8SuccessBigly() (gas: 8723)

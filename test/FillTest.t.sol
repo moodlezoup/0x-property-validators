@@ -64,7 +64,7 @@ contract MerkleValidatorTest is Test {
         );
 
         // // // // 80 bits
-        bytes memory bitVector = new bytes(10);
+        bytes memory bitVector = new bytes(1250);
         // The 63rd bit is set
         bitVector[7] = 0x01;
 
