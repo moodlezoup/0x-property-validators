@@ -21,6 +21,12 @@ For a given collection/trait, the corresponding bit vector or packed list can be
 `eth_call` simulations can be used to determine which of the two approaches is more gas efficient for the given collection/trait.
 For the rare cases where both the collection and the desired subset of tokenIds is extremely large, it may be more efficient to use a Merkle tree, which scales logarithmically with the size of the subset. 
 
+## Deployed contracts
+
+Mainnet:
+- `BitVectorPropertyValidator`: https://etherscan.io/address/0x345db61cf74cea41c0a58155470020e1392eff2b
+- `PackedListPropertyValidator`: https://etherscan.io/address/0xda9881fcdf8e73d57727e929380ef20eb50521fe
+
 ## Disclaimer
 
 These contracts have not been audited (or thoroughly tested, for that matter). Use at your own risk.
